@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>后台管理系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+    <div class="bg-circle bg-circle-3"></div>
+  </div>
+
+  <div class="cursor-glow"></div>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo-wrap">
+        <div class="logo-icon-wrap">
+          <span class="logo-icon">⚙</span>
+        </div>
+        <div>
+          <h1 class="logo">后台管理系统</h1>
+          <span class="logo-sub">产品 · 文本 · 管理</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="/" class="header-link" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          查看顾客网站
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-products">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 6 2 2 4-4"/><path d="M21 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value" id="statProducts">0</span>
+          <span class="stat-label">产品总数</span>
+        </div>
+        <div class="stat-spark" id="statSparkProducts"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-categories">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value" id="statCategories">0</span>
+          <span class="stat-label">分类数量</span>
+        </div>
+        <div class="stat-spark" id="statSparkCategories"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-texts">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value" id="statTexts">0</span>
+          <span class="stat-label">文本条数</span>
+        </div>
+        <div class="stat-spark" id="statSparkTexts"></div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="products">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m16 6 2 2 4-4"/><path d="M21 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></svg>
+        产品管理
+      </button>
+      <button class="tab" data-tab="texts">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        文本管理
+      </button>
+    </div>
+
+    <div class="tab-content active" id="tabProducts">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>产品列表</h2>
+          <button class="btn btn-primary" id="btnAddProduct">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            添加产品
+          </button>
+        </div>
+        <div class="search-bar">
+          <svg class="search-bar-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="productSearch" class="search-bar-input" placeholder="搜索产品名称或分类...">
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="productTable">
+            <thead>
+              <tr>
+                <th style="width:70px">图片</th>
+                <th>名称</th>
+                <th style="width:110px">分类</th>
+                <th style="width:100px">价格</th>
+                <th style="width:160px">操作</th>
+              </tr>
+            </thead>
+            <tbody id="productTableBody">
+              <tr class="table-empty">
+                <td colspan="5">
+                  <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <p>暂无产品</p>
+                    <span>点击"添加产品"开始添加</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tabTexts">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>文本列表</h2>
+          <button class="btn btn-primary" id="btnAddText">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            添加文本
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="textTable">
+            <thead>
+              <tr>
+                <th style="width:100px">类型</th>
+                <th>标题</th>
+                <th>内容</th>
+                <th style="width:160px">操作</th>
+              </tr>
+            </thead>
+            <tbody id="textTableBody">
+              <tr class="table-empty">
+                <td colspan="4">
+                  <div class="empty-state">
+                    <div class="empty-icon">�</div>
+                    <p>暂无文本</p>
+                    <span>点击"添加文本"开始添加</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="productModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="productModalTitle">添加产品</h3>
+        <button class="modal-close-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>产品名称 <span class="required">*</span></label>
+          <input type="text" id="productName" class="input" placeholder="请输入产品名称">
+        </div>
+        <div class="form-group">
+          <label>产品分类 <span class="required">*</span></label>
+          <input type="text" id="productCategory" class="input" placeholder="请输入产品分类">
+        </div>
+        <div class="form-group">
+          <label>产品价格 <span class="required">*</span></label>
+          <input type="number" id="productPrice" class="input" placeholder="请输入产品价格" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>产品描述</label>
+          <textarea id="productDesc" class="input textarea" placeholder="请输入产品描述" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label>产品图片</label>
+          <div class="upload-area" id="uploadArea">
+            <input type="file" id="productImage" accept="image/*" style="display:none">
+            <div class="upload-placeholder" id="uploadPlaceholder">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>点击上传图片</span>
+              <span class="upload-hint">支持 JPG、PNG、GIF</span>
+            </div>
+            <div class="upload-preview" id="uploadPreview" style="display:none">
+              <img id="previewImg" src="" alt="">
+              <button class="upload-remove" id="uploadRemove">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-cancel-btn">取消</button>
+        <button class="btn btn-primary" id="btnSaveProduct">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="textModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="textModalTitle">添加文本</h3>
+        <button class="modal-close-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>文本类型 <span class="required">*</span></label>
+          <select id="textType" class="input">
+            <option value="公告">公告</option>
+            <option value="通知">通知</option>
+            <option value="活动">活动</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>文本标题 <span class="required">*</span></label>
+          <input type="text" id="textTitle" class="input" placeholder="请输入文本标题">
+        </div>
+        <div class="form-group">
+          <label>文本内容 <span class="required">*</span></label>
+          <textarea id="textContent" class="input textarea" placeholder="请输入文本内容" rows="5"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-cancel-btn">取消</button>
+        <button class="btn btn-primary" id="btnSaveText">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content modal-confirm">
+      <div class="modal-header">
+        <h3>确认操作</h3>
+        <button class="modal-close-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="confirm-icon">⚠️</div>
+        <p id="confirmMsg" class="confirm-msg"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-cancel-btn">取消</button>
+        <button class="btn btn-danger" id="btnConfirm">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
